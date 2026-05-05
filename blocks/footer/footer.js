@@ -16,5 +16,24 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+ const p =footer.querySelector('.default-content-wrapper p');
+ if(p){
+  const socialDiv = document.createElement('div');
+  socialDiv.className = 'social-links';
+  socialDiv.innerHTML = `
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fhpp.kaiserpermanente.org%2Ffailover%2Ffaqs-es.htm" target="_blank" rel="noopener noreferrer">
+      <img src="/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fhpp.kaiserpermanente.org%2Ffailover%2Ffaqs-es.htm" target="_blank" rel="noopener noreferrer">
+      <img src="/icons/linkedin.svg" alt="LinkedIn">
+    </a>
+    <a href="https://www.instagram.com/sharer.php?u=https%3A%2F%2Fhpp.kaiserpermanente.org%2Ffailover%2Ffaqs-es.htm" target="_blank" rel="noopener noreferrer">
+          <img src="/icons/instagram.svg" alt="Instagram">
+        </a>
+  `;
+  p.insertAdjacentElement("afterend",socialDiv);
+
+  }
+
   block.append(footer);
 }
