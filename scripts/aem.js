@@ -591,8 +591,24 @@ function decorateBlocks(main) {
  * @param {Element} header header element
  * @returns {Promise}
  */
+/**
+ * Loads a block named 'header' into header
+ * @param {Element} header header element
+ * @returns {Promise}
+ */
 async function loadHeader(header) {
-  const headerBlock = buildBlock('header', '');
+  // First, try to find the kp-header block in main
+  const kpHeaderBlock = document.querySelector('main .kp-header');
+
+  if (kpHeaderBlock) {
+    // Move the existing kp-header block to the header element
+    header.append(kpHeaderBlock);
+    decorateBlock(kpHeaderBlock);
+    return loadBlock(kpHeaderBlock);
+  }
+
+  // Fallback: create empty header block if no kp-header found
+  const headerBlock = buildBlock('kp-header', '');
   header.append(headerBlock);
   decorateBlock(headerBlock);
   return loadBlock(headerBlock);
