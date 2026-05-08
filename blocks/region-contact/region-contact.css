@@ -1,0 +1,154 @@
+.region-contact .region-contact-control {
+  position: relative;
+  max-width: 370px;
+}
+
+.region-contact .region-contact-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #0d1c3d;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.region-contact .region-contact-trigger {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #0078b3;
+  border-radius: 4px;
+  background-color: #f0f5f8;
+  color: #005f96;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.region-contact .region-contact-trigger-icon::before {
+  content: '\2304';
+  display: inline-block;
+  color: #0078b3;
+  font-size: 20px;
+  line-height: 1;
+  transform: translateY(-2px);
+}
+
+.region-contact .region-contact-trigger[aria-expanded='true'] .region-contact-trigger-icon::before {
+  transform: rotate(180deg) translateY(2px);
+}
+
+.region-contact .region-contact-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #0078b3;
+  border-radius: 4px;
+  max-height: 380px;
+  overflow: auto;
+  display: none;
+  z-index: 20;
+}
+
+.region-contact .region-contact-menu.open {
+  display: block;
+}
+
+.region-contact .region-contact-option {
+  width: 100%;
+  border: 0;
+  background: #fff;
+  color: #0d1c3d;
+  text-align: left;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.region-contact .region-contact-option:hover {
+  background-color: #0a4477;
+  color: #fff;
+}
+
+.region-contact .region-contact-option.selected {
+  background-color: #f0f5f8;
+  color: #0d1c3d;
+  padding-left: 40px;
+  position: relative;
+}
+
+.region-contact .region-contact-option.selected::before {
+  content: '\2713';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #005f96;
+  font-size: 20px;
+}
+
+.region-contact .region-contact-panel {
+  margin-top: 28px;
+  color: #0d1c3d;
+}
+
+.region-contact .region-contact-panel h2,
+.region-contact .region-contact-panel h3 {
+  color: #0d1c3d;
+  font-size: 36px;
+  line-height: 40px;
+  margin: 0 0 12px;
+}
+
+.region-contact .region-contact-panel p,
+.region-contact .region-contact-panel li {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.region-contact .region-contact-panel a:any-link {
+  color: #0078b3;
+  text-decoration: underline;
+}
+
+.region-contact .region-contact-panel hr {
+  border: 0;
+  border-top: 1px solid #d5dae2;
+  margin: 24px 0;
+}
+
+@media (min-width: 600px) {
+  .region-contact .region-contact-label {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .region-contact .region-contact-trigger,
+  .region-contact .region-contact-option {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .region-contact .region-contact-panel h2,
+  .region-contact .region-contact-panel h3 {
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .region-contact .region-contact-panel p,
+  .region-contact .region-contact-panel li {
+    font-size: 16px;
+    line-height: 28px;
+  }
+}

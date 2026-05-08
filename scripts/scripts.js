@@ -114,6 +114,34 @@ function decorateButtons(main) {
 }
 
 /**
+ * Builds left/right rails for sidebar layouts and routes block wrappers
+ * based on authored block options like (slot-left) and (slot-right).
+ * @param {Element} main The main element
+ */
+function decorateLayoutSlots(main) {
+  main.querySelectorAll('.section.sidebar-3-9').forEach((section) => {
+    if (section.querySelector(':scope > .layout-rail')) return;
+
+    const leftRail = document.createElement('div');
+    leftRail.className = 'layout-rail layout-rail-left';
+
+    const rightRail = document.createElement('div');
+    rightRail.className = 'layout-rail layout-rail-right';
+
+    [...section.querySelectorAll(':scope > div')].forEach((wrapper) => {
+      const block = wrapper.querySelector(':scope > .block');
+      if (block?.classList.contains('slot-left')) {
+        leftRail.append(wrapper);
+      } else {
+        rightRail.append(wrapper);
+      }
+    });
+
+    section.append(leftRail, rightRail);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -123,6 +151,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateLayoutSlots(main);
   decorateButtons(main);
 }
 

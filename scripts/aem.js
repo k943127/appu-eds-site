@@ -591,11 +591,6 @@ function decorateBlocks(main) {
  * @param {Element} header header element
  * @returns {Promise}
  */
-/**
- * Loads a block named 'header' into header
- * @param {Element} header header element
- * @returns {Promise}
- */
 async function loadHeader(header) {
   // First, try to find the kp-header block in main
   const kpHeaderBlock = document.querySelector('main .kp-header');
@@ -607,7 +602,30 @@ async function loadHeader(header) {
     return loadBlock(kpHeaderBlock);
   }
 
-  // Fallback: create empty header block if no kp-header found
+  // Fallback: try to load kp-header from nav fragment
+  const navMeta = getMetadata('nav');
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+
+  try {
+    const { loadFragment } = await import(`${window.hlx.codeBasePath}/blocks/fragment/fragment.js`);
+    const fragment = await loadFragment(navPath);
+
+    // Look for kp-header in the fragment (might be nested)
+    const headerBlock = fragment.querySelector('.kp-header');
+
+    if (headerBlock) {
+      // loadFragment() already decorates and loads blocks. Move the live block
+      // into <header> so existing event listeners (desktop/mobile interactions)
+      // stay attached.
+      header.append(headerBlock);
+      return null;
+    }
+  } catch (error) {
+    // If fragment loading fails, continue to fallback
+    console.error('Failed to load nav fragment:', error);
+  }
+
+  // Final fallback: create empty header block if no kp-header found anywhere
   const headerBlock = buildBlock('kp-header', '');
   header.append(headerBlock);
   decorateBlock(headerBlock);

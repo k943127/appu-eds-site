@@ -1,0 +1,128 @@
+.faq .faq-accordion {
+  margin: 0;
+  padding: 0;
+}
+
+.faq .faq-item {
+  margin: 0 0 8px;
+}
+
+.faq .faq-item-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0 16px;
+  border: 0;
+  background-color: transparent;
+  color: #003b71;
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq .faq-item.is-open .faq-item-button {
+  background-color: #f0f7fa;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.faq .faq-item-icon {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 24px;
+  margin-right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.faq .faq-item-icon-image {
+  display: block;
+}
+
+.faq .faq-item-icon-minus {
+  display: none;
+}
+
+.faq .faq-item.is-open .faq-item-icon {
+  flex-basis: 24px;
+  width: 24px;
+}
+
+.faq .faq-item.is-open .faq-item-icon-plus {
+  display: none;
+}
+
+.faq .faq-item.is-open .faq-item-icon-minus {
+  display: block;
+}
+
+.faq .faq-item-text {
+  flex: 1 1 auto;
+  margin: 1rem 0;
+  color: #003b71;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.faq .faq-item-panel {
+  display: none;
+  margin-bottom: 8px;
+  padding: 0 16px 16px 48px;
+  background-color: #f0f7fa;
+  color: #0d1c3d;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.faq .faq-item-panel.is-open {
+  display: block;
+}
+
+.faq .faq-item-panel > *:first-child {
+  margin-top: 0;
+}
+
+.faq .faq-item-panel > *:last-child {
+  margin-bottom: 0;
+}
+
+.faq .faq-item-panel,
+.faq .faq-item-panel p,
+.faq .faq-item-panel li {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.faq .faq-item-panel ul,
+.faq .faq-item-panel ol {
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+.faq .faq-item-panel a:any-link {
+  color: #0078b3;
+  text-decoration: underline;
+}
+
+.faq .faq-item-panel p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.faq .faq-item-button:focus-visible {
+  outline: 2px solid #0078b3;
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .faq .faq-item-panel,
+  .faq .faq-item-panel p,
+  .faq .faq-item-panel li {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
