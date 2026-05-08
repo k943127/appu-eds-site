@@ -1,7 +1,7 @@
 footer {
   background-color: var(--brand-color);
   font-size: var(--body-font-size-xs);
-  color:white;
+  color: white;
 }
 
 footer .footer > div {
@@ -14,20 +14,42 @@ footer .footer p {
   margin: 0;
 }
 
-.footer-wrapper .default-content-wrapper{
+.footer .social-links-container{
+ display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+
+.footer-wrapper .default-content-wrapper {
   display: flex;
-   justify-content: center;
-   align-items: center;
+  justify-content: center;
+  align-items: center;
+  margin-right: 32px;
 }
 
-.social-links{
-  margin-left:16px
+/* Social links inside footer */
+.footer-social-list {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
 }
 
-.social-links a {
-  color: white;
+.footer-social-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* space between text and icon */
   text-decoration: none;
+  color: inherit;
+  font-size: 1rem; /* adjust as needed */
 }
+
+.footer-social-list img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
 
 @media (width >= 900px) {
   footer .footer > div {
@@ -36,27 +58,39 @@ footer .footer p {
 }
 
 @media (max-width: 599px) {
-    footer .footer > div {
+  footer .footer > div {
     padding-inline: 20px;
   }
 
+  .footer .social-links-container{
+   display: flex;
+   flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    }
 
-.footer-wrapper .default-content-wrapper{
-  display: flex;
-  flex-direction: column;
-   justify-content: center;
-   align-items: center;
-}
 
- footer .footer p {
-   color: #FFF;
+  .footer-wrapper .default-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0px
+  }
+
+
+  footer .footer p {
+    color: #fff;
     text-align: center;
-  font-size: 13px;
- font-style: normal;
- font-weight: 325;
- line-height: 20px ;
- margin-bottom:12px
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 325;
+    line-height: 20px;
+    margin-bottom: 12px;
+  }
 
- }
-
+  .footer-wrapper .footer-social {
+    margin-left: 0;
+    margin-top: 12px;
+  }
 }
