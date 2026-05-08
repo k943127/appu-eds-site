@@ -1,0 +1,22 @@
+.richtext .richtext-row1{
+  width: 1024px;
+    color: var(--brand-color);
+    /* Desktop/H3 */
+    font-family: var(--Desktop-H3-font-family, Gotham);
+    font-size: var(--Desktop-H3-font-size, 20px);
+    font-style: normal;
+    font-weight: 350;
+    line-height: var(--Desktop-H3-line-height, 28px); /* 140% */
+    letter-spacing: var(--Desktop-H3-letter-spacing, 0.01px);
+}
+
+.richtext .richtext-row2{
+  width: 1024px;
+    color: var(--Inky, #0D1C3D);
+    font-family: var(--Desktop-P3-Book-font-family, Gotham);
+    font-size: var(--Desktop-P3-Book-font-size, 16px);
+    font-style: normal;
+    font-weight: 325;
+    line-height: var(--Desktop-P3-Book-line-height, 24px); /* 150% */
+    letter-spacing: var(--Desktop-P3-Book-letter-spacing, 0);
+}
