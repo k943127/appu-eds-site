@@ -13,6 +13,12 @@ export default function decorate(block) {
           picWrapper.classList.add('columns-img-col');
         }
       }
+      const strong =col.querySelector('strong');
+      if(strong)
+      {
+         strong.classList.add('not-available');
+      }
+      col.querySelectorAll('p')[1]?.classList.add('care-services');
     });
   });
 }
