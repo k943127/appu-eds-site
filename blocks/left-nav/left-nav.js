@@ -70,19 +70,38 @@ export default async function decorate(block) {
       const linkEl = cells[1]?.querySelector('a');
       const linkUrl = linkEl?.href || cells[1]?.textContent?.trim() || '#';
 
-      // Third column indicates if this item is active (any non-empty value marks it as active)
-      const activeIndicator = cells[2]?.textContent?.trim() || '';
-      const isActive = activeIndicator && activeIndicator.toLowerCase() !== '';
+     const activeIndicator = cells[2]?.textContent?.trim().toLowerCase() || '';
+     const authoredActive = ['yes', 'true', 'active', 'x', '1', 'y'].includes(activeIndicator);
+
 
       if (titleText && linkUrl !== '#') {
         navItems.push({
           title: titleText,
           url: linkUrl,
-          active: isActive,
+          authoredActive,
+          active: false,
         });
       }
     }
   });
+
+const normalizePath = (url) => {
+  try {
+    const u = new URL(url, window.location.origin);
+    return (u.pathname.replace(/\/$/, '') || '/');
+  } catch (e) {
+    return '';
+  }
+};
+
+const currentPath = normalizePath(window.location.href);
+let activeIndex = navItems.findIndex((item) => normalizePath(item.url) === currentPath);
+if (activeIndex === -1) {
+  activeIndex = navItems.findIndex((item) => item.authoredActive);
+}
+navItems.forEach((item, index) => {
+  item.active = index === activeIndex;
+});
 
   // Clear block and rebuild
   block.textContent = '';

@@ -20,7 +20,6 @@
 }
 
 .columns > div >div >h1 {
-    height: 108px;
     margin-bottom: 24px;
     margin-top: 0px;
     color: var(--Inky, var(--Color-Inky, #0D1C3D));
@@ -108,7 +107,6 @@ text-underline-position: from-font;
 @media (max-width: 599px) {
 
 .columns > div > div > h1 {
-    height: 108px;
     margin-bottom: 24px;
     margin-top: 0px;
    color: #0D1C3D;
