@@ -60,6 +60,10 @@ export default async function decorate(block) {
     return;
   }
 
+  if (regions.length === 1) {
+    block.classList.add('single-region');
+  }
+
   const selectedIndex = Math.max(
     regions.findIndex((region) => region.key === defaultRegion),
     0,
