@@ -85,7 +85,7 @@
 
 /* Menu text below the hamburger icon */
 .kp-hamburger::after {
-    content: 'Menu';
+    content: attr(data-label);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -188,6 +188,8 @@
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.2s ease;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .kp-language-option:hover {
@@ -317,6 +319,8 @@
 .kp-mobile-language-section .kp-language-option {
     padding: 12px 16px;
     color: #0074AD;
+    background: transparent;
+    text-decoration: none;
 }
 
 .kp-mobile-language-section .kp-language-option:hover {

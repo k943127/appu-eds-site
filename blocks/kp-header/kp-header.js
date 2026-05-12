@@ -112,9 +112,17 @@ export default async function decorate(block) {
       const name = getText(cells[0]);
       const code = getText(cells[1]);
       const label = getText(cells[2]);
+      const menuLabel = getText(cells[3]);
+      const closeLabel = getText(cells[4]);
 
       if (name && code) {
-        languages.push({ name, code, label: label || 'Language' });
+        languages.push({
+          name,
+          code,
+          label: label || 'Language',
+          menuLabel: menuLabel || 'Menu',
+          closeLabel: closeLabel || 'Close',
+        });
       }
     }
   });
@@ -122,10 +130,31 @@ export default async function decorate(block) {
   // Default if no languages
   if (!languages.length) {
     languages.push(
-      { name: 'English', code: 'en', label: 'Language' },
-      { name: 'Español', code: 'es', label: 'Idioma' },
+      {
+        name: 'English', code: 'en', label: 'Language', menuLabel: 'Menu', closeLabel: 'Close',
+      },
+      {
+        name: 'Español', code: 'es', label: 'Idioma', menuLabel: 'Menú', closeLabel: 'Cerca',
+      },
     );
   }
+
+  // Detect current language from URL path
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const currentLangCode = languages.find((l) => pathParts[0] === l.code)?.code || languages[0].code;
+  let current = languages.find((l) => l.code === currentLangCode) || languages[0];
+
+  // Build language navigation URL by replacing the first path segment (language code)
+  const buildLangUrl = (code) => {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const knownCodes = languages.map((l) => l.code);
+    if (parts.length > 0 && knownCodes.includes(parts[0])) {
+      parts[0] = code;
+    } else {
+      parts.unshift(code);
+    }
+    return `/${parts.join('/')}`;
+  };
 
   // Clear and rebuild - AFTER extracting data
   block.textContent = '';
@@ -169,8 +198,6 @@ export default async function decorate(block) {
   menu.className = 'kp-language-menu';
   menu.setAttribute('role', 'listbox');
 
-  let current = languages[0];
-
   function updateUI(lang) {
     button.textContent = lang.name;
     label.textContent = lang.label || 'Language';
@@ -185,20 +212,18 @@ export default async function decorate(block) {
 
   // Create language options for desktop dropdown
   languages.forEach((lang) => {
-    const opt = document.createElement('button');
+    const opt = document.createElement('a');
     opt.className = 'kp-language-option';
     opt.textContent = lang.name;
     opt.dataset.code = lang.code;
+    opt.href = buildLangUrl(lang.code);
     opt.setAttribute('role', 'option');
     opt.setAttribute('aria-selected', lang.code === current.code);
 
     opt.onclick = (e) => {
       e.stopPropagation();
-      current = lang;
-      updateUI(lang);
       menu.classList.remove('open');
       button.setAttribute('aria-expanded', 'false');
-      button.focus();
     };
 
     menu.appendChild(opt);
@@ -252,7 +277,8 @@ export default async function decorate(block) {
   const closeButton = document.createElement('button');
   closeButton.className = 'kp-mobile-menu-close';
   closeButton.innerHTML = '✕';
-  closeButton.setAttribute('aria-label', 'Close menu');
+  closeButton.setAttribute('aria-label', current.closeLabel || 'Close');
+  closeButton.dataset.label = current.closeLabel || 'Close';
 
   mobileMenuHeader.append(mobileMenuLogo, closeButton);
 
@@ -273,18 +299,16 @@ export default async function decorate(block) {
   mobileMenu2.className = 'kp-language-menu';
 
   languages.forEach((lang) => {
-    const opt = document.createElement('button');
+    const opt = document.createElement('a');
     opt.className = 'kp-language-option';
     opt.textContent = lang.name;
     opt.dataset.code = lang.code;
+    opt.href = buildLangUrl(lang.code);
     opt.setAttribute('role', 'option');
     opt.setAttribute('aria-selected', lang.code === current.code);
 
     opt.onclick = (e) => {
       e.stopPropagation();
-      current = lang;
-      mobileButton.textContent = lang.name;
-      mobileLabel.textContent = lang.label || 'Language';
       mobileMenu2.classList.remove('open');
       mobileButton.setAttribute('aria-expanded', 'false');
     };
@@ -306,7 +330,8 @@ export default async function decorate(block) {
   const hamburger = document.createElement('button');
   hamburger.className = 'kp-hamburger';
   hamburger.innerHTML = '☰';
-  hamburger.setAttribute('aria-label', 'Open menu');
+  hamburger.setAttribute('aria-label', current.menuLabel || 'Menu');
+  hamburger.dataset.label = current.menuLabel || 'Menu';
 
   hamburger.onclick = () => {
     mobileMenuOverlay.classList.add('open');

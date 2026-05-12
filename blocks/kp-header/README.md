@@ -17,23 +17,31 @@ The kp-header block expects authored content structured as follows:
 ### Structure
 
 ```
-| Logo Image (complete logo with brand name) |
-| Language 1 | Language Code |
-| Language 2 | Language Code |
+| Logo Image (desktop) | Logo Image (mobile) | Logo Link URL |
+| Language 1 | Language Code | Language Label | Menu Label | Close Label |
+| Language 2 | Language Code | Language Label | Menu Label | Close Label |
 ```
 
 ### Example
 
 Row 1 (Logo):
-- Cell 1: Upload the complete Kaiser Permanente logo SVG (kp-logo.svg)
+- Cell 1: Upload the complete Kaiser Permanente logo SVG (kp-logo.svg) for desktop
+- Cell 2: Upload the mobile variant of the logo
+- Cell 3: Logo link URL (e.g. `https://healthy.kaiserpermanente.org`)
 
 Row 2 (Language Option 1):
 - Cell 1: `English`
 - Cell 2: `en`
+- Cell 3: `Language`
+- Cell 4: `Menu`
+- Cell 5: `Close`
 
 Row 3 (Language Option 2):
 - Cell 1: `Español`
 - Cell 2: `es`
+- Cell 3: `Idioma`
+- Cell 4: `Menú`
+- Cell 5: `Cerca`
 
 ### Logo Guidelines
 - Upload the complete Kaiser Permanente logo SVG file
