@@ -283,9 +283,10 @@ export default async function decorate(block) {
 
   const mobileMenuLogo = document.createElement('a');
   mobileMenuLogo.href = logoLink;
-  if (mobileLogo) {
-    const logoClone = mobileLogo.cloneNode(true);
-    logoClone.classList.remove('kp-logo-mobile');
+  const mobileMenuLogoSource = mobileLogo || desktopLogo;
+  if (mobileMenuLogoSource) {
+    const logoClone = mobileMenuLogoSource.cloneNode(true);
+    logoClone.classList.remove('kp-logo-mobile', 'kp-logo-desktop');
     mobileMenuLogo.appendChild(logoClone);
   }
 
