@@ -6,9 +6,12 @@
 .region-contact .region-contact-label {
   display: block;
   margin-bottom: 8px;
-  color: #0d1c3d;
-  font-size: 16px;
-  line-height: 24px;
+  color: var(--Global-Colors-Inky, #0D1C3D);
+  font-family: Gotham;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: 20px; /* 142.857% */
 }
 
 .region-contact .region-contact-trigger {
@@ -18,10 +21,15 @@
   border: 1px solid #0078b3;
   border-radius: 4px;
   background-color: #f0f5f8;
-  color: #005f96;
+  color: var(--Global-Colors-Midnight, #003B71);
+
+  /* UI/Button, Large */
+  font-family: Gotham;
   font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.16px;
   text-align: left;
   display: flex;
   align-items: center;
@@ -67,13 +75,18 @@
   width: 100%;
   border: 0;
   background: #fff;
-  color: #0d1c3d;
   text-align: left;
   padding: 14px 40px;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
   cursor: pointer;
+  color: var(--Global-Colors-Midnight, #003B71);
+
+  /* UI/Button, Large */
+  font-family: Gotham;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.16px;
 }
 
 .region-contact .region-contact-option:hover {
@@ -103,15 +116,34 @@
   color: #0d1c3d;
 }
 
-.region-contact .region-contact-panel h2,
-.region-contact .region-contact-panel h3 {
-  color: #0d1c3d;
-  font-size: 36px;
-  line-height: 40px;
-  margin: 0 0 12px;
+.region-contact .region-contact-panel h2{
+color: var(--Inky, #0D1C3D);
+
+/* Desktop/H2 */
+font-family: var(--Desktop-H2-font-family, Gotham);
+font-size: var(--Desktop-H2-font-size, 26px);
+font-style: normal;
+font-weight: 350;
+line-height: var(--Desktop-H2-line-height, 32px); /* 123.077% */
+letter-spacing: var(--Desktop-H2-letter-spacing, 0.01px);
 }
 
-.region-contact .region-contact-panel p,
+
+.region-contact .region-contact-panel p {
+  color: var(--Inky, #0D1C3D);
+
+  /* Desktop/P3, Medium */
+  font-family: var(--Desktop-P3-Medium-font-family, Gotham);
+  font-size: var(--Desktop-P3-Medium-font-size, 16px);
+  font-style: normal;
+  font-weight: 325;
+  line-height: var(--Desktop-P3-Medium-line-height, 24px); /* 150% */
+  letter-spacing: var(--Desktop-P3-Medium-letter-spacing, 0);
+}
+
+.region-contact .region-contact-panel p strong{
+    font-weight: 350;
+}
 .region-contact .region-contact-panel li {
   font-size: 16px;
   line-height: 28px;
@@ -140,19 +172,11 @@
     line-height: 24px;
   }
 
-  .region-contact .region-contact-trigger,
   .region-contact .region-contact-option {
     font-size: 16px;
     line-height: 24px;
   }
 
-  .region-contact .region-contact-panel h2,
-  .region-contact .region-contact-panel h3 {
-    font-size: 36px;
-    line-height: 40px;
-  }
-
-  .region-contact .region-contact-panel p,
   .region-contact .region-contact-panel li {
     font-size: 16px;
     line-height: 28px;
