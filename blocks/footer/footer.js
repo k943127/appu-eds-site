@@ -59,8 +59,12 @@ function decorateSocialLinks(socialTable) {
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
-  const [firstSegment] = window.location.pathname.split('/').filter(Boolean);
-  const languageCode = /^[a-z]{2}$/i.test(firstSegment) ? firstSegment.toLowerCase() : '';
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const languageCode = (() => {
+    if (pathParts[0] === 'content' && /^[a-z]{2}$/i.test(pathParts[1] || '')) return pathParts[1].toLowerCase();
+    if (/^[a-z]{2}$/i.test(pathParts[0] || '')) return pathParts[0].toLowerCase();
+    return '';
+  })();
 
   const footerMeta = getMetadata('footer');
   const footerPaths = footerMeta

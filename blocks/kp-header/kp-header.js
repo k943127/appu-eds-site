@@ -139,20 +139,35 @@ export default async function decorate(block) {
     );
   }
 
-  // Detect current language from URL path
-  const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const currentLangCode = languages.find((l) => pathParts[0] === l.code)?.code || languages[0].code;
-  let current = languages.find((l) => l.code === currentLangCode) || languages[0];
+  const knownCodes = languages.map((l) => l.code.toLowerCase());
 
-  // Build language navigation URL by replacing the first path segment (language code)
+  const getLanguageIndex = (parts) => {
+    if (parts[0] === 'content' && knownCodes.includes((parts[1] || '').toLowerCase())) return 1;
+    if (knownCodes.includes((parts[0] || '').toLowerCase())) return 0;
+    return parts.findIndex((part) => knownCodes.includes(part.toLowerCase()));
+  };
+
+  // Detect current language from URL path (supports /{lang}/... and /content/{lang}/...)
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const languageIndex = getLanguageIndex(pathParts);
+  const currentLangCode = languageIndex >= 0
+    ? pathParts[languageIndex].toLowerCase()
+    : languages[0].code;
+  let current = languages.find((l) => l.code.toLowerCase() === currentLangCode) || languages[0];
+
+  // Build language navigation URL while preserving current route structure.
   const buildLangUrl = (code) => {
     const parts = window.location.pathname.split('/').filter(Boolean);
-    const knownCodes = languages.map((l) => l.code);
-    if (parts.length > 0 && knownCodes.includes(parts[0])) {
-      parts[0] = code;
+    const langIndex = getLanguageIndex(parts);
+
+    if (langIndex >= 0) {
+      parts[langIndex] = code;
+    } else if (parts[0] === 'content') {
+      parts.splice(1, 0, code);
     } else {
       parts.unshift(code);
     }
+
     return `/${parts.join('/')}`;
   };
 
