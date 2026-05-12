@@ -59,9 +59,30 @@ function decorateSocialLinks(socialTable) {
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
+  const [firstSegment] = window.location.pathname.split('/').filter(Boolean);
+  const languageCode = /^[a-z]{2}$/i.test(firstSegment) ? firstSegment.toLowerCase() : '';
+
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  const footerPaths = footerMeta
+    ? [new URL(footerMeta, window.location).pathname]
+    : [
+      languageCode ? `/footer/${languageCode}/footer` : '',
+      languageCode ? `/${languageCode}/footer` : '',
+      '/footer',
+    ].filter(Boolean);
+
+  let fragment = null;
+  for (let i = 0; i < footerPaths.length; i += 1) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      fragment = await loadFragment(footerPaths[i]);
+      if (fragment?.children?.length) break;
+    } catch (error) {
+      // Try the next candidate path.
+      // eslint-disable-next-line no-console
+      console.warn(`Failed to load footer fragment: ${footerPaths[i]}`, error);
+    }
+  }
 
   block.textContent = '';
   if (!fragment) return;

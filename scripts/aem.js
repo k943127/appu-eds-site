@@ -592,6 +592,9 @@ function decorateBlocks(main) {
  * @returns {Promise}
  */
 async function loadHeader(header) {
+  const [firstSegment] = window.location.pathname.split('/').filter(Boolean);
+  const languageCode = /^[a-z]{2}$/i.test(firstSegment) ? firstSegment.toLowerCase() : '';
+
   // First, try to find the kp-header block in main
   const kpHeaderBlock = document.querySelector('main .kp-header');
 
@@ -604,25 +607,36 @@ async function loadHeader(header) {
 
   // Fallback: try to load kp-header from nav fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const navPaths = navMeta
+    ? [new URL(navMeta, window.location).pathname]
+    : [
+      languageCode ? `/header/${languageCode}/nav` : '',
+      languageCode ? `/${languageCode}/nav` : '',
+      '/nav',
+    ].filter(Boolean);
 
-  try {
-    const { loadFragment } = await import(`${window.hlx.codeBasePath}/blocks/fragment/fragment.js`);
-    const fragment = await loadFragment(navPath);
+  const { loadFragment } = await import(`${window.hlx.codeBasePath}/blocks/fragment/fragment.js`);
 
-    // Look for kp-header in the fragment (might be nested)
-    const headerBlock = fragment.querySelector('.kp-header');
+  for (let i = 0; i < navPaths.length; i += 1) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const fragment = await loadFragment(navPaths[i]);
 
-    if (headerBlock) {
-      // loadFragment() already decorates and loads blocks. Move the live block
-      // into <header> so existing event listeners (desktop/mobile interactions)
-      // stay attached.
-      header.append(headerBlock);
-      return null;
+      // Look for kp-header in the fragment (might be nested)
+      const headerBlock = fragment.querySelector('.kp-header');
+
+      if (headerBlock) {
+        // loadFragment() already decorates and loads blocks. Move the live block
+        // into <header> so existing event listeners (desktop/mobile interactions)
+        // stay attached.
+        header.append(headerBlock);
+        return null;
+      }
+    } catch (error) {
+      // Try the next candidate path.
+      // eslint-disable-next-line no-console
+      console.warn(`Failed to load nav fragment: ${navPaths[i]}`, error);
     }
-  } catch (error) {
-    // If fragment loading fails, continue to fallback
-    console.error('Failed to load nav fragment:', error);
   }
 
   // Final fallback: create empty header block if no kp-header found anywhere
