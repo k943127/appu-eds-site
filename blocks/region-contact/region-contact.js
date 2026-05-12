@@ -25,6 +25,7 @@ export default async function decorate(block) {
     const first = cells[0]?.textContent?.trim() || '';
     const second = cells[1];
     const third = cells[2]?.textContent?.trim() || '';
+    const fourth = cells[3]?.textContent?.trim() || '';
 
     if (!first) return;
 
@@ -42,9 +43,11 @@ export default async function decorate(block) {
 
     if (!second) return;
 
+    const isTwoColumnRow = cells.length >= 4 && !isConfigRow(toKey(first));
     const regionLabel = first;
-    const regionKey = toKey(third || regionLabel);
+    const regionKey = isTwoColumnRow ? toKey(fourth || regionLabel) : toKey(third || regionLabel);
     const regionContent = second.innerHTML.trim();
+    const regionContentRight = isTwoColumnRow ? cells[2]?.innerHTML.trim() : '';
 
     if (!regionContent) return;
 
@@ -52,16 +55,13 @@ export default async function decorate(block) {
       key: regionKey,
       label: regionLabel,
       content: regionContent,
+      contentRight: regionContentRight,
     });
   });
 
   if (!regions.length) {
     block.textContent = '';
     return;
-  }
-
-  if (regions.length === 1) {
-    block.classList.add('single-region');
   }
 
   const selectedIndex = Math.max(
@@ -117,7 +117,28 @@ export default async function decorate(block) {
     currentIndex = index;
     const selected = regions[currentIndex];
     triggerText.textContent = selected.label;
-    panel.innerHTML = selected.content;
+    panel.replaceChildren();
+
+    const contentWrap = document.createElement('div');
+    contentWrap.className = 'region-contact-panel-content';
+    contentWrap.innerHTML = selected.content;
+    panel.append(contentWrap);
+
+    if (selected.contentRight) {
+      const columnsWrap = document.createElement('div');
+      columnsWrap.className = 'region-contact-panel-columns';
+
+      const leftCol = document.createElement('div');
+      leftCol.className = 'region-contact-panel-column region-contact-panel-column-left';
+      leftCol.innerHTML = selected.content;
+
+      const rightCol = document.createElement('div');
+      rightCol.className = 'region-contact-panel-column region-contact-panel-column-right';
+      rightCol.innerHTML = selected.contentRight;
+
+      columnsWrap.replaceChildren(leftCol, rightCol);
+      panel.replaceChildren(columnsWrap);
+    }
 
     menu.querySelectorAll('.region-contact-option').forEach((option, optionIndex) => {
       const isSelected = optionIndex === currentIndex;

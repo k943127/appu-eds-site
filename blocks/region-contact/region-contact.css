@@ -160,10 +160,24 @@ letter-spacing: var(--Desktop-H2-letter-spacing, 0.01px);
   margin: 24px 0;
 }
 
-/* Some authored region details include a nested columns block. For single-region
-   pages, force a stacked flow so the content reads as one continuous column. */
-.region-contact.single-region .region-contact-panel .columns > div {
+.region-contact .region-contact-panel-content {
   display: block;
+}
+
+.region-contact .region-contact-panel-columns {
+  display: grid;
+  gap: 24px;
+}
+
+.region-contact .region-contact-panel-column > :first-child {
+  margin-top: 0;
+}
+
+@media (min-width: 900px) {
+  .region-contact .region-contact-panel-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 56px;
+  }
 }
 
 @media (min-width: 600px) {
